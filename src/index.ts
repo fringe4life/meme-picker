@@ -52,13 +52,13 @@ function getSingleCatObject(){
 }
 
 function getMatchingCatsArray(){     
-    if(document.querySelector('input[type="radio"]:checked')){
-        const radioInput = document.querySelector('input[type="radio"]:checked') as HTMLInputElement
-        const selectedEmotion = radioInput.value
+    const selectList = document.getElementById('select-emotions') as HTMLSelectElement
+    if(selectList){
+        //const radioInput = document.querySelector('select[type="radio"]:checked') as HTMLInputElement
+        const selectedEmotion = selectList.value
         const isGif = gifsOnlyOption.checked
         
         const matchingCatsArray = catsData.filter((cat)=>{
-            
             if(isGif){
                 return cat.emotionTags.includes(selectedEmotion) && cat.isGif
             }
@@ -75,25 +75,31 @@ function getEmotionsArray(cats: Cat[]){
 }
 
 function renderEmotionsRadios(cats: Cat[]){
-        const selectAlternative = ''
+        
    
     const emotions = getEmotionsArray(cats)
-    const radioItems = emotions.map(emotion=>`
-        <div class="radio">
-            <label for="${emotion}">${emotion}</label>
-            <input
-            type="radio"
-            id="${emotion}"
-            value="${emotion}"
-            name="emotions"
-            >
-        </div>`).join('')
+
+    const options= emotions.map(emotion=>`<option class='option-emotions' value="${emotion}">${emotion}
+    </option>`).join('')
+
+    const selectAlternative = `<select class='select-emotions' id='select-emotions'>${options}</select>`
+
+    // 
     
-    emotionRadios.innerHTML = radioItems
+    emotionRadios.innerHTML = selectAlternative
 }
 
 renderEmotionsRadios(catsData)
 
 
-
+    // const radioItems = emotions.map(emotion=>`
+    //     <div class="radio">
+    //         <label for="${emotion}">${emotion}</label>
+    //         <input
+    //         type="radio"
+    //         id="${emotion}"
+    //         value="${emotion}"
+    //         name="emotions"
+    //         >
+    //     </div>`).join('')
 
