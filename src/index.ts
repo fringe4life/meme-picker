@@ -7,6 +7,7 @@ const memeModalInner = document.getElementById('meme-modal-inner') as HTMLDivEle
 const memeModal = document.getElementById('meme-modal') as HTMLDivElement
 const memeModalCloseBtn = document.getElementById('meme-modal-close-btn') as HTMLButtonElement
 
+
 emotionRadios.addEventListener('change', highlightCheckedOption)
 
 memeModalCloseBtn.addEventListener('click', closeModal)
@@ -47,14 +48,15 @@ function getRandomNumber(min:number, max: number){
 
 function getSingleCatObject(){
     const catsArray = getMatchingCatsArray() as Cat[]
-    
-    return catsArray[getRandomNumber(0, catsArray.length)]
+    // simplified the logic using a random number without need for if... else
+    const random = getRandomNumber(0, catsArray.length-1)
+    return catsArray[random]
 }
 
 function getMatchingCatsArray(){     
+    // must place here as otherwise element won't be in dom and will be undefined
     const selectList = document.getElementById('select-emotions') as HTMLSelectElement
     if(selectList){
-        //const radioInput = document.querySelector('select[type="radio"]:checked') as HTMLInputElement
         const selectedEmotion = selectList.value
         const isGif = gifsOnlyOption.checked
         
@@ -74,7 +76,7 @@ function getEmotionsArray(cats: Cat[]){
     return Array.from(emotionsArray)
 }
 
-function renderEmotionsRadios(cats: Cat[]){
+function renderEmotions(cats: Cat[]){
         
    
     const emotions = getEmotionsArray(cats)
@@ -89,17 +91,6 @@ function renderEmotionsRadios(cats: Cat[]){
     emotionRadios.innerHTML = selectAlternative
 }
 
-renderEmotionsRadios(catsData)
+renderEmotions(catsData)
 
-
-    // const radioItems = emotions.map(emotion=>`
-    //     <div class="radio">
-    //         <label for="${emotion}">${emotion}</label>
-    //         <input
-    //         type="radio"
-    //         id="${emotion}"
-    //         value="${emotion}"
-    //         name="emotions"
-    //         >
-    //     </div>`).join('')
 
